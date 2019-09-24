@@ -1,2 +1,2 @@
 # AED_II
-Repositório referente a disciplina de AED 2; 2019.1
+Algoritimos e estrutura de dados feitos em disiciplina
