@@ -15,51 +15,51 @@ No* criar_no(int info){
 }
 
 int search_no(No* raiz, int elemento){ //procura se o no existe na arvore;
-  while(raiz != NULL){
-    if(raiz->info == elemento) return 1;
-    if(elemento > raiz->info){
-      raiz = raiz->dir;
-    } else {
-      raiz = raiz->esq;
-    }
-  }
-  return 0;
+	while(raiz != NULL){
+		if(raiz->info == elemento) return 1;
+		if(elemento > raiz->info){
+			raiz = raiz->dir;
+		} else {
+			raiz = raiz->esq;
+		}
+	}
+	return 0;
 }
 
 No* antecessorPai(No* raiz) {
-  No* aux_pai = raiz;
-  No* aux = raiz->esq;
-  while(aux->dir != NULL){
-    aux_pai = aux;
-    aux = aux->dir;
-  }
-  return aux_pai;
+	No* aux_pai = raiz;
+	No* aux = raiz->esq;
+	while(aux->dir != NULL){
+		aux_pai = aux;
+		aux = aux->dir;
+	}
+	return aux_pai;
 }
 
 No* antecessor(No* raiz){ //quando chegar aqui o no obrigatoriamente tera dois filhos.
-  No* no_pai = antecessorPai(raiz);
-  if(no_pai == raiz) {
-    return antecessorPai(raiz)->esq; //se o no pai for igual a raiz da arvore, entao o antecessor sera
-                                        //serao no a esquerda
-  } else {
-    return antecessorPai(raiz)->dir;
-  }
+	No* no_pai = antecessorPai(raiz);
+	if(no_pai == raiz) {
+		return antecessorPai(raiz)->esq; //se o no pai for igual a raiz da arvore, entao o antecessor sera
+		//serao no a esquerda
+	} else {
+		return antecessorPai(raiz)->dir;
+	}
 }
 
 No* inserir(No* raiz, int info){
 	No* novo = criar_no(info);
 
-    if(raiz == NULL){
-        return novo;
+	if(raiz == NULL){
+		return novo;
 
-    } else {
-        if(info > raiz->info){
-            raiz->dir = inserir(raiz->dir, info);
-        } else {
-            raiz->esq = inserir(raiz->esq, info);
-        }
-        return raiz;
-    }
+	} else {
+		if(info > raiz->info){
+			raiz->dir = inserir(raiz->dir, info);
+		} else {
+			raiz->esq = inserir(raiz->esq, info);
+		}
+		return raiz;
+	}
 }
 
 int altura(No* raiz){
@@ -129,37 +129,37 @@ int menor_elemento(No* raiz){
 
 No* remover(No* raiz, int info){
 	if(raiz == NULL){
-        return NULL;
-    }
-    else if(!search_no(raiz, info)){//quando o no nao  na arvore
-        return raiz;
-    }
-    else if(info > raiz->info){
-        raiz->dir = remover(raiz->dir, info);
+		return NULL;
+	}
+	else if(!search_no(raiz, info)){//quando o no nao  na arvore
+		return raiz;
+	}
+	else if(info > raiz->info){
+		raiz->dir = remover(raiz->dir, info);
 
-    } else if(info < raiz->info){
+	} else if(info < raiz->info){
 
-        raiz->esq = remover(raiz->esq, info);
-    } else {
-        No* no_aux = raiz;
-        if(raiz->esq == NULL && raiz->dir == NULL){ //Sem filhos
-            free(no_aux);
-            raiz = NULL;
+		raiz->esq = remover(raiz->esq, info);
+	} else {
+		No* no_aux = raiz;
+		if(raiz->esq == NULL && raiz->dir == NULL){ //Sem filhos
+			free(no_aux);
+			raiz = NULL;
 
-        } else if(raiz->esq != NULL && raiz->dir == NULL){ //Unico filho a esquerda
-            raiz = raiz->esq;
-            free(no_aux);
+		} else if(raiz->esq != NULL && raiz->dir == NULL){ //Unico filho a esquerda
+			raiz = raiz->esq;
+			free(no_aux);
 
-        } else if(raiz->esq == NULL && raiz->dir != NULL){ //unico filho a direita
-            raiz = raiz->dir;
-            free(no_aux);
+		} else if(raiz->esq == NULL && raiz->dir != NULL){ //unico filho a direita
+			raiz = raiz->dir;
+			free(no_aux);
 
-        } else { //Dois filhos
-            No* predecessor = antecessor(raiz);
-            raiz->info = predecessor->info;
-            raiz->esq = remover(raiz->esq, predecessor->info);
+		} else { //Dois filhos
+			No* predecessor = antecessor(raiz);
+			raiz->info = predecessor->info;
+			raiz->esq = remover(raiz->esq, predecessor->info);
 
-        }
-    }
-    return raiz;
+		}
+	}
+	return raiz;
 }
