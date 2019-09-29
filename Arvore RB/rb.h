@@ -9,10 +9,30 @@ typedef struct no{
   struct no *pai, *esq, *dir;
 } No;
 
-void imprimir_elemento(No* no);
+//void imprimir_elemento(No* no);
 
 No* criar_no(int info);
 
 void pre_order(No* raiz);
+
+int cor(No* no);
+
+int eh_esquerdo(No* no);
+
+int eh_raiz(No* no);
+
+No* tio(No* n);
+
+void rotacao_simples_dir(No* raiz, No* no);
+
+No* rotacao_simples_esq(No** raiz, No* no);
+
+No* rotacao_dupla_dir_esq(No** raiz, No* no);
+
+No* rotacao_dupla_esq_dir(No**, No* no);
+
+void ajustar(No* raiz, No* no);
+
+void inserir(No** raiz, int info);
 
 #endif
