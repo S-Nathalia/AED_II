@@ -1,3 +1,4 @@
 ## AED_II
 ---
-Algoritimos e estrutura de dados feitos em disiciplina
+Algoritimos e Estruturas de dados feito em disiciplina.
+
