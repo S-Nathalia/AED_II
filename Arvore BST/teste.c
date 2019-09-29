@@ -4,8 +4,8 @@
 
 
 int main(int argc, char*  argv[]) {
-	Arvore* arvore = inicializar();
 	int opcao;
+	No* arvore = NULL;
 
 	while(1 == 1) {
 		scanf("%d", &opcao);
@@ -14,63 +14,45 @@ int main(int argc, char*  argv[]) {
 		switch(opcao) {
 			case 1:
 				scanf("%d", &valor);
-				arvore->raiz = inserir(arvore->raiz, valor);
+				arvore = inserir(arvore, valor);
 				break;
 
 			case 2:
-				pre_order(arvore->raiz);
+				pre_order(arvore);
 				printf("\n");
 				break;
 
 			case 3:
-				in_order(arvore->raiz);
-				//printf("\n");
+				in_order(arvore);
+				printf("\n");
 				break;
 
 			case 4:
-				pos_order(arvore->raiz);
-				//printf("\n");
+				pos_order(arvore);
+				printf("\n");
 				break;
 
 			case 5:
 				scanf("%d", &valor);
-				arvore->raiz = remover(arvore->raiz, valor);
+				arvore = remover(arvore, valor);
 				break;
 
 			case 6:
-				maior = maior_elemento(arvore->raiz);
+				maior = maior_elemento(arvore);
 				printf("%d", maior);
-				//printf("\n");
+				printf("\n");
 				break;
 
 			case 7:
-				menor = menor_elemento(arvore->raiz);
+				menor = menor_elemento(arvore);
 				printf("%d", menor);
-				//printf("\n");
+				printf("\n");
 				break;
 
 			case 8:
-				h = altura(arvore->raiz);
+				h = altura(arvore);
 				printf("%d", h);
-				//printf("\n");
-				break;
-
-			case 9:
-				scanf("%d", &valor);
-				pai(arvore->raiz, valor);
-				//printf("\n");
-				break;
-
-			case 10:
-				scanf("%d", &valor);
-				sucessor(arvore->raiz, valor);
-				//printf("\n");
-				break;
-
-			case 11:
-				scanf("%d", &valor);
-				antecessor(arvore->raiz, valor);
-				//printf("\n");
+				printf("\n");
 				break;
 
 			case 999:

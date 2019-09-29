@@ -8,64 +8,58 @@ void imprimir_elemento(No* elemento){
 
 No* criar_no(int info){
 	No* novo = (No*)malloc(sizeof(No));
-	novo->pai = NULL;
 	novo->esq = NULL;
 	novo->dir = NULL;
 	novo->info = info;
 	return novo;
 }
 
-No* buscar_no(No* raiz, int valor){
-	if(raiz == NULL){
-		return NULL;
-	} else{
-		while(raiz != NULL && valor != raiz->info){
-			if(valor < raiz->info){
-				raiz = raiz->esq;
-			} else{
-				raiz = raiz->dir;
-			}
-		}
-		return raiz;
-	}
+int search_no(No* raiz, int elemento){ //procura se o no existe na arvore;
+  while(raiz != NULL){
+    if(raiz->info == elemento) return 1;
+    if(elemento > raiz->info){
+      raiz = raiz->dir;
+    } else {
+      raiz = raiz->esq;
+    }
+  }
+  return 0;
 }
 
-Arvore* inicializar(){
-	Arvore* arvore = (Arvore*)malloc(sizeof(Arvore));
-	arvore->raiz = NULL;
-	return arvore;
+No* antecessorPai(No* raiz) {
+  No* aux_pai = raiz;
+  No* aux = raiz->esq;
+  while(aux->dir != NULL){
+    aux_pai = aux;
+    aux = aux->dir;
+  }
+  return aux_pai;
 }
 
-No* inserir(No* tree, int info){
+No* antecessor(No* raiz){ //quando chegar aqui o no obrigatoriamente tera dois filhos.
+  No* no_pai = antecessorPai(raiz);
+  if(no_pai == raiz) {
+    return antecessorPai(raiz)->esq; //se o no pai for igual a raiz da arvore, entao o antecessor sera
+                                        //serao no a esquerda
+  } else {
+    return antecessorPai(raiz)->dir;
+  }
+}
+
+No* inserir(No* raiz, int info){
 	No* novo = criar_no(info);
-	No* noAtual = tree;
 
-  //Raiz com valor nulo
-	if(noAtual == NULL){
-		return novo;
-	}
+    if(raiz == NULL){
+        return novo;
 
-	while(noAtual != NULL){
-		if(info < noAtual->info){
-      //Só entra se chegar no fim do ramo
-			if(noAtual->esq == NULL) {
-				novo->pai = noAtual;
-				noAtual->esq = novo;
-				return tree;
-			}
-			noAtual = noAtual->esq;
-      //Caso o valor, a ser adicionado seja maior ou igual que o do noAtual
-		}else{
-      //Só entra se chegar no fim do ramo
-			if(noAtual->dir == NULL) {
-				novo->pai = noAtual;
-				noAtual->dir = novo;
-				return tree;
-			}
-			noAtual = noAtual->dir;
-		}
-	}
-	return tree;
+    } else {
+        if(info > raiz->info){
+            raiz->dir = inserir(raiz->dir, info);
+        } else {
+            raiz->esq = inserir(raiz->esq, info);
+        }
+        return raiz;
+    }
 }
 
 int altura(No* raiz){
@@ -79,23 +73,6 @@ int altura(No* raiz){
 	}
 	else{
 		return h_direita + 1;
-	}
-}
-
-
-void pai(No* no, int info){
-	if(no == NULL){
-		printf("-1");
-	}
-	else if(info == no->info){
-		printf("%d", no->pai->info);
-	}
-	else {
-		if(info < no->info){
-			pai(no->esq, info);
-		}else{
-			pai(no->dir, info);
-		}
 	}
 }
 
@@ -150,139 +127,39 @@ int menor_elemento(No* raiz){
 	return aux->info;
 }
 
-void antecessor(No* raiz, int info){
-	No* aux = buscar_no(raiz, info);
-	int menor = menor_elemento(raiz);
-
-	if(raiz == NULL || aux == NULL){
-		printf("-1");
-		return;
-	}
-  else if(info == menor){//caso o numero seja o menor elemento, ele n tera antecessor
-  	printf("-1");
-  }
-  else if(aux->esq == NULL){ //caso ele nao tenha filhos a esquerda, entao o antecessor é o pai
-  	printf("%d", aux->pai->info);
-  }
-  else{
-  	aux = aux->esq;
-  	while(aux->dir != NULL){
-  		aux = aux->dir;
-  	}
-  	printf("%d", aux->info);
-  }
-}
-
-void sucessor(No* raiz, int info){
-	No* aux = buscar_no(raiz, info);
-	int maior = maior_elemento(raiz);
-
-	if(raiz == NULL || aux == NULL){
-		printf("-1");
-		return;
-	}
-  else if(info == maior){ //caso seja o maior elemento, nesse caso ele nao tem sucessor
-  	printf("-1");
-  	return;
-  }
-  else if(aux->dir == NULL){ //caso o no a direita nao tenha no a esquerda, entao ele é o sucessor
-  	printf("%d", aux->pai->info);
-  }
-  else{
-  	aux = aux->dir;
-  	while(aux->esq != NULL){
-  		aux = aux->esq;
-  	}
-  	printf("%d", aux->info);
-  }
-}
-
 No* remover(No* raiz, int info){
-	No* noAtual = buscar_no(raiz, info);
-
-	if(noAtual == NULL) {
-		return raiz;
-	}
-
-//clonando o noAtual para o auxiliar
-	No* no_aux = noAtual;
-	no_aux->pai = noAtual->pai;
-	no_aux->esq = noAtual->esq;
-	no_aux->dir = noAtual->dir;
-
-
 	if(raiz == NULL){
-		return raiz;
+        return NULL;
+    }
+    else if(!search_no(raiz, info)){//quando o no nao  na arvore
+        return raiz;
+    }
+    else if(info > raiz->info){
+        raiz->dir = remover(raiz->dir, info);
 
-  } else if(noAtual->dir == NULL && noAtual->esq == NULL){ //quando o caso a ser removido é uma folha
+    } else if(info < raiz->info){
 
-    //caso tenha pai
-  	if(noAtual->pai != NULL) {
-  		if(noAtual->pai->esq != NULL && noAtual->pai->esq == noAtual) {
-  			noAtual->pai->esq = NULL;
-  		} else {
-  			noAtual->pai->dir = NULL;
-  		}
-  	}
-  	free(noAtual);
+        raiz->esq = remover(raiz->esq, info);
+    } else {
+        No* no_aux = raiz;
+        if(raiz->esq == NULL && raiz->dir == NULL){ //Sem filhos
+            free(no_aux);
+            raiz = NULL;
 
-  } else if(noAtual->dir == NULL && noAtual->esq != NULL){ //quando o removido so tem filho a esquerda
+        } else if(raiz->esq != NULL && raiz->dir == NULL){ //Unico filho a esquerda
+            raiz = raiz->esq;
+            free(no_aux);
 
-    //se o no for raiz
-  	if(no_aux == raiz) {
-  		free(raiz);
-  		noAtual = noAtual->esq;
-  		return noAtual;
-  	}
+        } else if(raiz->esq == NULL && raiz->dir != NULL){ //unico filho a direita
+            raiz = raiz->dir;
+            free(no_aux);
 
-  	noAtual->esq->pai = noAtual->pai;
-  	noAtual->pai->esq = noAtual->esq;
+        } else { //Dois filhos
+            No* predecessor = antecessor(raiz);
+            raiz->info = predecessor->info;
+            raiz->esq = remover(raiz->esq, predecessor->info);
 
-  	free(noAtual);
-
-  } else if(noAtual->dir != NULL && noAtual->esq == NULL){ //quando o removido so tem filho a direita
-
-    //se o no a ser removido for raiz
-  	if(no_aux == raiz) {
-  		free(raiz);
-  		noAtual = noAtual->dir;
-  		return noAtual;
-  	}
-
-  	noAtual->dir->pai = noAtual->pai;
-  	noAtual->pai->dir = noAtual->dir;
-  	free(noAtual);
-
-  } else {
-
-  	noAtual = noAtual->esq;
-  	while(noAtual->dir != NULL){
-  		noAtual = noAtual->dir;
-  	}
-
-  	noAtual->dir = no_aux->dir;
-  	noAtual->dir->pai = noAtual;
-
-  	if(noAtual->esq != NULL && no_aux->pai != raiz) {
-  		noAtual->pai->dir = noAtual->esq;
-  		noAtual->esq->pai = noAtual->pai;
-  		noAtual->esq = no_aux->esq;
-  		noAtual->esq->pai = noAtual;
-  	}
-
-  	noAtual->pai = no_aux->pai;
-
-  	if(no_aux->pai->esq == no_aux) {
-  		noAtual->pai->esq = noAtual;
-  	} else {
-  		noAtual->pai->dir = noAtual;
-  	}
-
-  	free(no_aux);
-
-  	if(noAtual->pai == NULL) {
-  		return noAtual;
-  	}
-  }
-  return raiz;
+        }
+    }
+    return raiz;
 }
