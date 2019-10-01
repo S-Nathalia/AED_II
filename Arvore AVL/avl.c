@@ -58,6 +58,7 @@ No* rotacao_simples_dir(No* pivo){
 }
 
 No* rotacao_simples_esq(No* pivo){
+   No* u = pivo->dir;
 
    pivo->dir = u->esq;
    u->esq = pivo;
@@ -70,7 +71,6 @@ No* rotacao_simples_esq(No* pivo){
 
 No* casoEspecial_RSE(No* pivo){ //caso especial, quando na remocao existe um no com fb de 0
    No* u = pivo->dir;              // e seu pai tem fb 2;
-   No* u = pivo->dir;
 
    pivo->dir = u->esq;
    u->esq = pivo;
