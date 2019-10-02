@@ -23,15 +23,15 @@ int eh_raiz(No* no);
 
 No* tio(No* n);
 
-void rotacao_simples_dir(No* raiz, No* no);
+void rotacao_simples_dir(No** raiz, No* no, int simples);
 
-No* rotacao_simples_esq(No** raiz, No* no);
+void rotacao_simples_esq(No** raiz, No* no, int simples);
 
-No* rotacao_dupla_dir_esq(No** raiz, No* no);
+void rotacao_dupla_dir(No** raiz, No* no);
 
-No* rotacao_dupla_esq_dir(No**, No* no);
+void rotacao_dupla_esq(No** raiz, No* no);
 
-void ajustar(No* raiz, No* no);
+void ajustar(No** raiz, No* no);
 
 void inserir(No** raiz, int info);
 
