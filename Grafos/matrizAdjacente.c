@@ -7,41 +7,44 @@
 #include<stdio.h>
 
 typedef struct grafo{
-   int vertice;    /* quantidade total de vertices */
-   int **matriz;  /* Matriz (a ser alocada dinamicamente) */
-   char *mapa;
+  int vertice;    /* quantidade total de vertices */
+  int **matriz;  /* Matriz (a ser alocada dinamicamente) */
+  char *mapa;
 } Grafo;
 
 typedef struct vertice{
   char v; /* A letra que o vertice se chamará */
 } Vertice;
 
+
+/*Cria uma matriz quadrada, com a diagonal 1, e o restante 0. */
+
 Grafo* criarMatriz(int vertices, Grafo *grafo){
-   grafo = malloc(sizeof(Grafo));
-   grafo->vertice = vertices;
-   grafo->mapa = (char*)malloc(sizeof(char) * vertices);
-   grafo->matriz = (int**) malloc(vertices * sizeof(int*));
+  grafo = malloc(sizeof(Grafo));
+  grafo->vertice = vertices;
+  grafo->mapa = (char*)malloc(sizeof(char) * vertices);
+  grafo->matriz = (int**) malloc(vertices * sizeof(int*));
 
-   for(int k = 0; k < vertices; k++){
-     grafo->matriz[k] = (int*) malloc(vertices * sizeof(int));
-   }
+  for(int k = 0; k < vertices; k++){
+    grafo->matriz[k] = (int*) malloc(vertices * sizeof(int));
+  }
 
-   for(int i = 0; i < vertices; i++){
-     for(int j = 0; j < vertices; j++){
-       if(i != j){
-         grafo->matriz[i][j] = 0;
-       } else{
-         grafo->matriz[i][j] = 1;
-       }
-     }
-   }
-   return grafo;
+  for(int i = 0; i < vertices; i++){
+    for(int j = 0; j < vertices; j++){
+      if(i != j){
+        grafo->matriz[i][j] = 0;
+      } else{
+        grafo->matriz[i][j] = 1;
+      }
+    }
+  }
+  return grafo;
 }
 
 Grafo* addAresta(Grafo* grafo, char x, char y){
 
   /*Descrição:
-   x e y serão, respectivamente, as coordenadas em que teremos uma arestas.
+  x e y serão, respectivamente, as coordenadas em que teremos uma arestas.
   Se x seŕá igual ao novo índice, a variavel coluna terá  seu valor, o mesmo
   para variavel linha (ou vice-versa). Logo após a atribuição, como o grafo nao
   eh direcionado, as posiçoes x y e yx serão iguais, ambas contendo 1 em sua
@@ -51,7 +54,7 @@ Grafo* addAresta(Grafo* grafo, char x, char y){
   int posColuna;
   for(int n = 0; n < grafo->vertice; n++){
     if(x == grafo->mapa[n]){
-        posLinha = n;
+      posLinha = n;
     }
     if(y == grafo->mapa[n]){
       posColuna = n;
@@ -72,6 +75,9 @@ void imprimirMatriz(Grafo* grafo){
   }
 }
 
+/*Abre o arquivo em modo read, e irá lendo linha por linha
+a variavel lixo, eh onde está sendo colocado o \n.*/
+
 Grafo* lerArquivo(Grafo* grafo){
   int vertices, arestas;
   char lixo, x, y, temp;
@@ -91,7 +97,7 @@ Grafo* lerArquivo(Grafo* grafo){
       grafo = addAresta(grafo, x, y);
     }
   }
-    return grafo;
+  return grafo;
 }
 
 
