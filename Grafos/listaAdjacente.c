@@ -1,5 +1,11 @@
+/*TODO:
+comentar codigo explicando cada funcao;*/
+
 #include <stdlib.h>
 #include <stdio.h>
+
+/*strcut possui a letra do vertice, a lista a ser apontada eh a lista de adj do mesmo vertice, e seu proximo;
+todos os vertice estao em uma lista principal, e cada no dessa lista aponta da outra lista de seus respectivo vertice... */
 
 typedef struct no{
     char vertice;
@@ -11,16 +17,16 @@ typedef struct lista{
     struct no* inicial;
 }Lista;
 
-Lista* initListVertices(){
+Lista* initList(){
     Lista* lista = malloc(sizeof(Lista));
     lista->inicial = NULL;
     return lista;
 }
 
-void addListVertices(Lista* lista, char letra){
+void addList(Lista* lista, char letra){
     No* no = (No*) malloc(sizeof(No));
     no->vertice = letra;
-    no->adj = initListVertices();
+    no->adj = initList();
 
     if(lista->inicial == NULL){
         lista->inicial = no;
@@ -33,7 +39,7 @@ void addListVertices(Lista* lista, char letra){
     }
 }
 
-void imprimirListVertices(Lista* listaV){
+void imprimirList(Lista* listaV){
     if(listaV->inicial == NULL){
         printf("- ");
     } else {
@@ -44,6 +50,8 @@ void imprimirListVertices(Lista* listaV){
         }printf("%c ", cursor->vertice);
     }
 }
+
+/* Verifica a existencia do vertice na lista principal, se ele n existe retornamos 0. */
 
 int verticeExiste(Lista* lista, char x){
     No* cursor = (No*) malloc(sizeof(No));
@@ -71,11 +79,13 @@ No* retornarVertice(Lista* lista, char vrt){
     }
 }
 
+/* Como cada no tem aponta para uma lista de seu respectivo vertice, eh necessario inicilizar essa lista, nos nós que serao retornados caso existam na lista principal. Usando a mesma funcao de inserir na lista principal, eh mandado a lista adj para a qual o nó aponta e mandando um char (e nao um no) para armazenar na mesma. */
+
 void addAresta(Lista* listaV, char x, char y){
     No* vX = (No*) malloc(sizeof(No));
-    vX->adj = initListVertices();
+    vX->adj = initList();
     No* vY = (No*) malloc(sizeof(No));
-    vY->adj = initListVertices();
+    vY->adj = initList();
 
     if(verticeExiste(listaV, x)){
         if(verticeExiste(listaV, y)){
@@ -83,8 +93,8 @@ void addAresta(Lista* listaV, char x, char y){
             vX = retornarVertice(listaV, x);
             vY = retornarVertice(listaV, y);
 
-            addListVertices(vX->adj, y);
-            addListVertices(vY->adj, x);
+            addList(vX->adj, y);
+            addList(vY->adj, x);
         }
     } else{
         printf("alguns dos vertices da aresta no arquivo nao existe! Na ligacao %c%c", x, y);
@@ -102,7 +112,7 @@ Lista* lerArquivo(Lista* listaV){
 
         for(int i = 0; i < qntV; i++){
             fscanf(arquivo, "%c%c", &tempV, &lixo);
-            addListVertices(listaV, tempV);
+            addList(listaV, tempV);
         }
 
         for(int k = 0; k < qntA; k++){
@@ -123,15 +133,17 @@ void imprimirListaC(Lista* lista){
     No* temp = NULL;
 
     for(cursor = lista->inicial; cursor != NULL; cursor = cursor->prox){
+        /* imprimi o primeiro vertice da lista principal... */
         printf("%c -> ", cursor->vertice);
-        imprimirListVertices(cursor->adj);
+        /* e seus respectivos nós conectados. */
+        imprimirList(cursor->adj);
         printf("\n");
     }
 }
 
 
 int main(void){
-    Lista* lista = initListVertices();
+    Lista* lista = initList();
     lista = lerArquivo(lista);
     imprimirListaC(lista);
 
