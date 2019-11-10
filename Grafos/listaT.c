@@ -5,10 +5,10 @@ typedef struct vertice{
     char letra;
     struct lista* adj;
 }vertice;
+
 typedef struct no{
     struct vertice* noVertice;
     struct no* prox;
-
 }no;
 
 typedef struct lista{

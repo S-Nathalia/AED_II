@@ -12,11 +12,6 @@ typedef struct grafo{
   char *mapa;
 } Grafo;
 
-typedef struct vertice{
-  char v; /* A letra que o vertice se chamará */
-} Vertice;
-
-
 /*Cria uma matriz quadrada, com a diagonal 1, e o restante 0. */
 
 Grafo* criarMatriz(int vertices, Grafo *grafo){
@@ -66,6 +61,8 @@ Grafo* addAresta(Grafo* grafo, char x, char y){
   return grafo;
 }
 
+/* TODO: imprimir de forma que exiba a qual vertice a coluna linha se refere.*/
+
 void imprimirMatriz(Grafo* grafo){
   for(int i = 0; i < grafo->vertice; i++){
     for(int j = 0; j < grafo->vertice; j++){
@@ -98,6 +95,8 @@ Grafo* lerArquivo(Grafo* grafo){
     }
   }
   return grafo;
+
+  fclose(arquivo);
 }
 
 
