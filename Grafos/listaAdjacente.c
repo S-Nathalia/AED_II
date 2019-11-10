@@ -4,8 +4,10 @@ comentar codigo explicando cada funcao;*/
 #include <stdlib.h>
 #include <stdio.h>
 
-/*strcut possui a letra do vertice, a lista a ser apontada eh a lista de adj do mesmo vertice, e seu proximo;
-todos os vertice estao em uma lista principal, e cada no dessa lista aponta da outra lista de seus respectivo vertice... */
+/*strcut possui a letra do vertice, a lista a ser apontada eh a lista de adj do
+ mesmo vertice, e seu proximo;
+todos os vertice estao em uma lista principal, e cada no dessa lista aponta da
+ outra lista de seus respectivo vertice... */
 
 typedef struct no{
     char vertice;
@@ -51,7 +53,8 @@ void imprimirList(Lista* listaV){
     }
 }
 
-/* Verifica a existencia do vertice na lista principal, se ele n existe retornamos 0. */
+/* Verifica a existencia do vertice na lista principal, se ele n existe
+ retornamos 0. */
 
 int verticeExiste(Lista* lista, char x){
     No* cursor = (No*) malloc(sizeof(No));
@@ -79,7 +82,11 @@ No* retornarVertice(Lista* lista, char vrt){
     }
 }
 
-/* Como cada no tem aponta para uma lista de seu respectivo vertice, eh necessario inicilizar essa lista, nos nós que serao retornados caso existam na lista principal. Usando a mesma funcao de inserir na lista principal, eh mandado a lista adj para a qual o nó aponta e mandando um char (e nao um no) para armazenar na mesma. */
+/* Como cada no tem aponta para uma lista de seu respectivo vertice, eh
+ necessario inicilizar essa lista, nos nós que serao retornados caso existam na
+  lista principal. Usando a mesma funcao de inserir na lista principal, eh
+   mandado a lista adj para a qual o nó aponta e mandando um char (e nao um no)
+    para armazenar na mesma. */
 
 void addAresta(Lista* listaV, char x, char y){
     No* vX = (No*) malloc(sizeof(No));
