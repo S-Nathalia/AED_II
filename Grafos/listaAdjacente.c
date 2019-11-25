@@ -1,5 +1,3 @@
-/*TODO:
-comentar codigo explicando cada funcao;*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,7 +7,9 @@ comentar codigo explicando cada funcao;*/
 todos os vertice estao em uma lista principal, e cada no dessa lista aponta da
  outra lista de seus respectivo vertice... */
 
+
 typedef struct no{
+    char cor;
     char vertice;
     struct no* prox;
     struct lista* adj;

@@ -61,10 +61,15 @@ Grafo* addAresta(Grafo* grafo, char x, char y){
     return grafo;
 }
 
-/* TODO: imprimir de forma que exiba a qual vertice a coluna linha se refere.*/
-
 void imprimirMatriz(Grafo* grafo){
+    printf("   ");
+    for(int m = 0; m < grafo->vertice; m++){
+        printf("%c  ", grafo->mapa[m]);
+    }
+    printf("\n");
+
     for(int i = 0; i < grafo->vertice; i++){
+        printf("%c  ", grafo->mapa[i]);
         for(int j = 0; j < grafo->vertice; j++){
             printf("%d  ", grafo->matriz[i][j]);
         }
@@ -79,7 +84,7 @@ Grafo* lerArquivo(Grafo* grafo){
     int vertices, arestas;
     char lixo, x, y, temp;
 
-    FILE* arquivo = fopen("dados.txt", "r");
+    FILE* arquivo = fopen("dados2.txt", "r");
 
     if(arquivo != NULL){
         fscanf(arquivo, "%d %d", &vertices, &arestas);
@@ -98,7 +103,6 @@ Grafo* lerArquivo(Grafo* grafo){
 
     fclose(arquivo);
 }
-
 
 int main(){
     Grafo* grafo;
