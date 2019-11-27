@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+enum c {BRANCO, PRETO, CINZA};
 /*strcut possui a letra do vertice, a lista a ser apontada eh a lista de adj do
  mesmo vertice, e seu proximo;
 todos os vertice estao em uma lista principal, e cada no dessa lista aponta da
@@ -9,11 +10,13 @@ todos os vertice estao em uma lista principal, e cada no dessa lista aponta da
 
 
 typedef struct no{
-    char cor;
+    enum c cor;
     char vertice;
+    int tempo[1];
+    struct no* pai;
     struct no* prox;
     struct lista* adj;
-}No;
+} No;
 
 typedef struct lista{
     struct no* inicial;
