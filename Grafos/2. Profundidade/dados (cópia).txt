@@ -1,0 +1,27 @@
+13 13
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+AB
+AC
+AG
+AF
+GE
+ED
+FD
+EF
+JM
+JL
+JK
+ML
+IH
